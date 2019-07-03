@@ -1,0 +1,10 @@
+title Fullstack notes sekvenssikaavio
+
+
+User->Serveri: HTTP GET request
+Serveri->User: Palautetaan .js, .css ja html palvelimelta.
+note left of User: Käyttäjän selain näyttää sivun.
+note left of User: Tehdään muistiinpano ja tallennetaan.
+User->Serveri: HTTP POST request lähtee palvelimelle ja suoritetaan uusi GET request.
+Serveri->User: .Js, .css. html tulee uusilla tiedoilla.
+

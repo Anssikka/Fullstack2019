@@ -1,0 +1,10 @@
+title Fullstack Spa sekvenssikaavio
+
+
+User->Serveri: HTTP GET request
+Serveri->User: Palautetaan .js, .css, .html ja .json palvelimelta.
+note left of User: Käyttäjän selain näyttää sivun.
+note left of User: Tehdään muistiinpano ja tallennetaan.
+User->Serveri: HTTP POST request lähtee palvelimelle.
+Serveri->User: Taustalla pyörivä javascript muokkaa sivulla näytettävää html:ää eikä uutta get pyyntöä tarvita.
+
