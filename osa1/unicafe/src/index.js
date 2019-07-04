@@ -13,7 +13,10 @@ const Statistics = ({header, good, neutral, bad}) => {
   let average = (good+(bad*-1))/total
   let positiveVotes = good/total
   
-  return (
+
+  
+  if (total > 0) {
+    return (
     <div>
     <h2>{header}</h2>
     <ul>
@@ -25,6 +28,13 @@ const Statistics = ({header, good, neutral, bad}) => {
       <li>positiveVotes: {positiveVotes}</li>
       </ul>
       </div>
+  )}
+
+  return (
+    <div>
+    <h2>{Header}</h2>
+    <p>No feedback given</p>
+    </div>
   )
 } 
 
