@@ -8,6 +8,26 @@ return (
 <button onClick={clickHandler} >{text}</button>
 )}
 
+const Statistics = ({header, good, neutral, bad}) => {
+  let total = good + neutral + bad
+  let average = (good+(bad*-1))/total
+  let positiveVotes = good/total
+  
+  return (
+    <div>
+    <h2>{header}</h2>
+    <ul>
+      <li>good: {good}</li>
+      <li>neutral: {neutral}</li>
+      <li>bad:{bad}</li>
+      <li>all: {total}</li>
+      <li>average: {average}</li>
+      <li>positiveVotes: {positiveVotes}</li>
+      </ul>
+      </div>
+  )
+} 
+
 
 const App = () => {
   // tallenna napit omaan tilaansa
@@ -22,22 +42,13 @@ const App = () => {
   let positiveVotes = good/total
 
 
-
   return (
     <div>
       <Header header='Give feedback'/>
       <Button clickHandler={() => clickHandler(good, setGood)} text='Good'/> 
       <Button clickHandler={() => clickHandler(neutral, setNeutral)} text='Neutral' />
       <Button clickHandler={() => clickHandler(bad, setBad)} text='bad'/>
-      <h2>Statistics</h2>
-      <p>good: {good}</p>
-      <p>neutral: {neutral}</p>
-      <p>bad:{bad}</p>
-      <p>all: {total}</p>
-      <p>average: {average}</p>
-      <p>positive: {positiveVotes}</p>
-
-      
+      <Statistics header='Statistics:' good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
