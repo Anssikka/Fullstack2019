@@ -9,6 +9,7 @@ const Button = ({clickHandler, text}) => (
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [vote, addVote] = useState(new Array(anecdotes.length).fill(0))
+  const [mostVotedIndex, changeMostVoted] = useState(0)
 
 
 
@@ -22,6 +23,8 @@ const App = (props) => {
     const temp = [...vote]
     temp[index] = temp[index] + 1
     addVote(temp)
+    const mostVotes = temp.indexOf(Math.max(...temp))
+    changeMostVoted(mostVotes)
   } 
 
   
@@ -31,6 +34,9 @@ const App = (props) => {
       <Button clickHandler={clickHandler} text='Next anecdote' />
       <Button clickHandler={() => voteHandler(selected)} text='Vote anecdote' />
       <p>has: {vote[selected]} votes </p>
+      <h2>Anecdote with most votes:</h2>
+      <p>{anecdotes[mostVotedIndex]}</p>
+
     </div>
   )
 }
