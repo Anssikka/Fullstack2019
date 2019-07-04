@@ -15,20 +15,27 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
- const clickHandler = (value, updater) => updater(value + 1) 
+ 
+  const clickHandler = (value, updater) => updater(value + 1)
+  let total = good + neutral + bad
+  let average = (good+(bad*-1))/total
+  let positiveVotes = good/total
 
 
 
   return (
     <div>
       <Header header='Give feedback'/>
-      <Button clickHandler={() => clickHandler(good, setGood)} text='Good'/>
+      <Button clickHandler={() => clickHandler(good, setGood)} text='Good'/> 
       <Button clickHandler={() => clickHandler(neutral, setNeutral)} text='Neutral' />
-      <Button clickhandler={() => clickHandler(bad, setBad)} text='Bad'/>
+      <Button clickHandler={() => clickHandler(bad, setBad)} text='bad'/>
       <h2>Statistics</h2>
       <p>good: {good}</p>
       <p>neutral: {neutral}</p>
-      <p>bad: {bad}</p>
+      <p>bad:{bad}</p>
+      <p>all: {total}</p>
+      <p>average: {average}</p>
+      <p>positive: {positiveVotes}</p>
 
       
     </div>
