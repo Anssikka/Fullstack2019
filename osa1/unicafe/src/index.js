@@ -18,26 +18,34 @@ const Statistics = ({header, good, neutral, bad}) => {
   if (total > 0) {
     return (
     <div>
-    <h2>{header}</h2>
-    <ul>
-      <li>good: {good}</li>
-      <li>neutral: {neutral}</li>
-      <li>bad:{bad}</li>
-      <li>all: {total}</li>
-      <li>average: {average}</li>
-      <li>positiveVotes: {positiveVotes}</li>
-      </ul>
-      </div>
+      <table>
+        <tbody>
+          <Statistic text='good' value={good} /> 
+          <Statistic text='neutral' value={neutral} />  
+          <Statistic text='bad' value={bad} />  
+          <Statistic text='all' value={total} />  
+          <Statistic text='average' value={average} />  
+          <Statistic text='positive' value={positiveVotes} />  
+        </tbody>
+      </table>
+    </div>
   )}
 
   return (
     <div>
-    <h2>{Header}</h2>
     <p>No feedback given</p>
     </div>
   )
 } 
 
+const Statistic = ({text, value}) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
+}
 
 const App = () => {
   // tallenna napit omaan tilaansa
@@ -47,9 +55,7 @@ const App = () => {
 
  
   const clickHandler = (value, updater) => updater(value + 1)
-  let total = good + neutral + bad
-  let average = (good+(bad*-1))/total
-  let positiveVotes = good/total
+
 
 
   return (
@@ -58,7 +64,8 @@ const App = () => {
       <Button clickHandler={() => clickHandler(good, setGood)} text='Good'/> 
       <Button clickHandler={() => clickHandler(neutral, setNeutral)} text='Neutral' />
       <Button clickHandler={() => clickHandler(bad, setBad)} text='bad'/>
-      <Statistics header='Statistics:' good={good} neutral={neutral} bad={bad} />
+      <h2>Statistics</h2>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
