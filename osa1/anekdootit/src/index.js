@@ -1,12 +1,24 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+
+const Button = ({clickHandler, text}) => (
+  <div><button onClick={clickHandler}>{text}</button></div>
+)
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
 
+  const clickHandler = () => {
+    let randomNumber = Math.floor(Math.random() * anecdotes.length)
+    setSelected(randomNumber)
+  }
+
+  
   return (
     <div>
       {props.anecdotes[selected]}
+      <Button clickHandler={clickHandler} text='Next anecdote' />
     </div>
   )
 }
