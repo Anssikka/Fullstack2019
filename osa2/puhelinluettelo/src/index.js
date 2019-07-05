@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
+import Filter from './Components/Filter.js'
+import PersonForm from './Components/PersonForm.js'
+import ReturnNames from './Components/ReturnNames.js'
 
-const ReturnNames = (props) => {
-  return(
-  props.nameArray.filter((p) => p.name.toUpperCase().includes(props.filterw.toUpperCase())).map((p, i) => <p key={i}>{p.name}  {p.number}</p>)
-  )
-}
 
 const App = () => {
   const [ persons, setPersons] = useState([{ name: 'Arto Hellas', number: '040-432472341' }]) 
@@ -23,7 +21,8 @@ const App = () => {
     } else {
       setPersons(persons.concat(tempObj))
     }    
-    setNewName('')    
+    setNewName('')
+    setNewNumber('')    
   }
 
   const handleNewName = (event) => {
@@ -41,22 +40,19 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>Filter shown with: <input value={filterBox} onChange={handleFilter}/></div>
+      <Filter filterBox={filterBox} handleFilter={handleFilter}/>
       <h3>Add new</h3>
-      <form onSubmit={addName}>
-        <div>
-          name: <input value={newName} onChange={handleNewName} />
-        </div>
-        number: <input value={newNumber} onChange={handleNewNumber}/>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm addName={addName} 
+      newName={newName} handleNewName={handleNewName}
+      newNumber={newNumber} handleNewNumber={handleNewNumber}/>
       <h2>Numbers</h2>
       <ReturnNames nameArray={persons} filterw={filterBox}/>
     </div>
   )
 
 }
+
+
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
