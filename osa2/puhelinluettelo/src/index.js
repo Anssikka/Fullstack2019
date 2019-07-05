@@ -2,18 +2,16 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const ReturnNames = (props) => {
-  return (
-    props.nameArray.map((p, i) => <p key={i}>{p.name}  {p.number}</p>)
+  return(
+  props.nameArray.filter((p) => p.name.toUpperCase().includes(props.filterw.toUpperCase())).map((p, i) => <p key={i}>{p.name}  {p.number}</p>)
   )
-
 }
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-432472341' }
-  ]) 
+  const [ persons, setPersons] = useState([{ name: 'Arto Hellas', number: '040-432472341' }]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
+  const [ filterBox, setFilterBox] = useState('')
 
 
   const addName = (event) => {
@@ -36,9 +34,15 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleFilter = (event) => {
+    setFilterBox(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>Filter shown with: <input value={filterBox} onChange={handleFilter}/></div>
+      <h3>Add new</h3>
       <form onSubmit={addName}>
         <div>
           name: <input value={newName} onChange={handleNewName} />
@@ -49,7 +53,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <ReturnNames nameArray={persons}/>
+      <ReturnNames nameArray={persons} filterw={filterBox}/>
     </div>
   )
 
