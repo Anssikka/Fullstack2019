@@ -12,11 +12,15 @@ const Total = props => {
   
 const Course = (props) => {
   return (
-    <div>
-      <Header course={props.course.name} />
-      <Content parts={props.course.parts} />
-      <Total parts={props.course.parts} />
+  props.course.map((cours) => {
+    return (
+      <div>
+      <Header course={cours.name} />
+      <Content parts={cours.parts} />
+      <Total parts={cours.parts} />
     </div>
+    )
+  })
   )
 }
 
@@ -32,27 +36,52 @@ const Content = (props) => {
 } 
 
 const App = () => {
-  const course = {
-    name: 'Half Stack -sovelluskehitys',
-    parts: [
-      {
-        name: 'Reactin perusteet',
-        exercises: 10
-      },
-      {
-        name: 'Tiedonvälitys propseilla',
-        exercises: 7
-      },
-      {
-        name: 'Komponenttien tila',
-        exercises: 14
-      }      
-    ]
-  } 
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
   return (
     <div>
-      <Course course={course} />
+      <Course course={courses} />
     </div>
   )
 }
