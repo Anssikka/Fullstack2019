@@ -52,7 +52,7 @@ const Weather = ({capital}) => {
       setWeather(wetter)
       
     })
-  }, [])
+  })
   return(
     
     <div>
