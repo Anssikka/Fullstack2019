@@ -37,6 +37,36 @@ const ShowCountries = (props) => {
   
 }
 
+const Weather = ({capital}) => {
+  const [weather, setWeather] = useState({temp:'', windDir:'', windKph:'', image:''})
+  const request = `http://api.apixu.com/v1/current.json?key=f914d0f2e7264df19dd100902191007&q=${capital}`
+  
+  useEffect(() => {
+    axios.get(request)
+    .then(response => {
+      const data = response.data
+      const wetter = {temp: data.current.temp_c, 
+        windDir: data.current.wind_dir, 
+        windKph: data.current.wind_kph,
+      image: data.current.condition.icon}
+      setWeather(wetter)
+      
+    })
+  }, [])
+  return(
+    
+    <div>
+    <h2>Weather in {capital}</h2>
+    <p>Temperature:{weather.temp}</p>
+    <img src={weather.image} alt="condition" width='50' height='50'/>
+    <p>Wind speed:{weather.windKph}, direction: {weather.windDir}</p>
+    
+    
+    </div>
+    
+  )
+}
+
 
 const Country = (props) => {
   if (props.countryA.length > 1) {
@@ -61,6 +91,7 @@ const Country = (props) => {
         <h3>Languages</h3>
         {languages.map(la => <li key={la.name}>{la.name}</li>)}
         <img src={o.flag} alt="flag" width="200" height="150"/>
+        <Weather capital={o.capital} />
 
       </div>
     )
@@ -95,6 +126,7 @@ function App() {
       setCountries(datat)
     })
   }
+
 
   useEffect(hook,[])
 
