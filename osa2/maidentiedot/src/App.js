@@ -57,9 +57,9 @@ const Weather = ({capital}) => {
     
     <div>
     <h2>Weather in {capital}</h2>
-    <p>Temperature:{weather.temp}</p>
+    <p>Temperature:{weather.temp} Celcius</p>
     <img src={weather.image} alt="condition" width='50' height='50'/>
-    <p>Wind speed:{weather.windKph}, direction: {weather.windDir}</p>
+    <p>Wind speed:{weather.windKph} km/h, direction: {weather.windDir}</p>
     
     
     </div>
