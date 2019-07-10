@@ -24,7 +24,7 @@ const ShowCountries = (props) => {
   } else if (filteredCountries.length > 1 && filteredCountries.length < 10) {
     return (
       <div>
-        <Country countryA={filteredCountries} />
+        <Country countryA={filteredCountries} changeFilter={props.changeFilter} />
       </div>
     )
   } else if (filteredCountries.length === 0) {
@@ -42,7 +42,7 @@ const Country = (props) => {
   if (props.countryA.length > 1) {
   return (
     props.countryA.map((o, i) => {
-      return (<div key={i}><p>{o.name}</p></div>)
+      return (<div key={i}><p>{o.name}</p><button onClick={() => props.changeFilter(o.name)}>Show</button></div>)
     })   
   )}
 
@@ -75,6 +75,10 @@ function App() {
     setFilterBox(event.target.value)
   }
 
+  const changeFilter = (n) => {
+    setFilterBox(n)
+  }
+
   const hook = () => {
     axios.get('https://restcountries.eu/rest/v2/all')
     .then(response => {
@@ -98,7 +102,7 @@ function App() {
     <div>
       <h1>Country finder:</h1>
     <Finder filterBox={filterBox} handleFilter={handleFilter} />
-    <ShowCountries countries={countries} filterW={filterBox} />
+    <ShowCountries countries={countries} filterW={filterBox} changeFilter={changeFilter} />
     </div>
   );
 }
