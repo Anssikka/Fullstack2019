@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Filter from './Components/Filter.js'
 import PersonForm from './Components/PersonForm.js'
 import ReturnNames from './Components/ReturnNames.js'
+import personService from './Services/persons'
 import axios from 'axios'
 
 
@@ -13,17 +14,15 @@ const App = () => {
   const [ filterBox, setFilterBox] = useState('')
 
 
-  const hook = () => {
-    console.log('effect')
-    axios.get('http://localhost:3001/persons')
-    .then(response => {
-      console.log('promise fulfilled')
-      setPersons(response.data)
+  useEffect(() => {
+    personService.getAll()
+    .then(persons => {
+      setPersons(persons)
     })
-  }
+  },[])
 
-  useEffect(hook, [])
 
+  // todo
   const addName = (event) => {
     event.preventDefault()
     const personObj = {name : newName, number: newNumber}
@@ -31,17 +30,16 @@ const App = () => {
     if (array.includes(newName)) {
       alert(`${newName} is already added to the phonebook`)      
     } else {
-      setPersons(persons.concat(personObj))
+      /* setPersons(persons.concat(personObj)) */
+      personService.create(personObj)
+      .then(newPerson => {
+        setPersons(persons.concat(newPerson))
+      })
     }    
-    axios.post('http://localhost:3001/persons', personObj)
-    .then(response => {
-      console.log(response)
-    })
-
-    
     setNewName('')
     setNewNumber('')    
   }
+
 
   const handleNewName = (event) => {
     setNewName(event.target.value)
@@ -55,6 +53,14 @@ const App = () => {
     setFilterBox(event.target.value)
   }
 
+  const deletePerson = id => {
+    console.log(`Delete ${id}`)
+    personService.deletePerson(id).then(() => {
+      const updatedList = persons.filter(p => p.id !== id)
+      setPersons(updatedList)
+    })
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -64,7 +70,7 @@ const App = () => {
       newName={newName} handleNewName={handleNewName}
       newNumber={newNumber} handleNewNumber={handleNewNumber}/>
       <h2>Numbers</h2>
-      <ReturnNames nameArray={persons} filterw={filterBox}/>
+      <ReturnNames nameArray={persons} filterw={filterBox} handleDelete={deletePerson}/>
     </div>
   )
 
