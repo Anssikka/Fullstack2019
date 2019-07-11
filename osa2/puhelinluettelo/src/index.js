@@ -28,7 +28,15 @@ const App = () => {
     const personObj = {name : newName, number: newNumber}
     const array = persons.map((o) => o.name)
     if (array.includes(newName)) {
-      alert(`${newName} is already added to the phonebook`)      
+      const result = window.confirm(`${newName} is already added to the phonebook, do you want to replace the number with a new one?`)
+      if (result) {
+        const personToUpdate = persons.find(o => o.name === newName)
+        personToUpdate.number = newNumber
+        personService.update(personToUpdate).then(result => {
+          setPersons(persons.map(p => p.id !== personToUpdate.id ? p : result))
+        })
+
+      }      
     } else {
       /* setPersons(persons.concat(personObj)) */
       personService.create(personObj)
