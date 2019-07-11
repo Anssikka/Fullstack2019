@@ -26,13 +26,19 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    const tempObj = {name : newName, number: newNumber}
+    const personObj = {name : newName, number: newNumber}
     const array = persons.map((o) => o.name)
     if (array.includes(newName)) {
       alert(`${newName} is already added to the phonebook`)      
     } else {
-      setPersons(persons.concat(tempObj))
+      setPersons(persons.concat(personObj))
     }    
+    axios.post('http://localhost:3001/persons', personObj)
+    .then(response => {
+      console.log(response)
+    })
+
+    
     setNewName('')
     setNewNumber('')    
   }
