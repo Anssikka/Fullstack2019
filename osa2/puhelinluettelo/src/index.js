@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom'
 import Filter from './Components/Filter.js'
 import PersonForm from './Components/PersonForm.js'
 import ReturnNames from './Components/ReturnNames.js'
+import Notification from './Components/Alert.js'
 import personService from './Services/persons'
-import axios from 'axios'
+import './index.css'
+
 
 
 const App = () => {
@@ -12,6 +14,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ filterBox, setFilterBox] = useState('')
+  const [errorBox, setErrorBox] = useState('')
 
 
   useEffect(() => {
@@ -22,7 +25,7 @@ const App = () => {
   },[])
 
 
-  // todo
+
   const addName = (event) => {
     event.preventDefault()
     const personObj = {name : newName, number: newNumber}
@@ -34,14 +37,27 @@ const App = () => {
         personToUpdate.number = newNumber
         personService.update(personToUpdate).then(result => {
           setPersons(persons.map(p => p.id !== personToUpdate.id ? p : result))
+          setErrorBox(
+            `Person '${personToUpdate.name}' number has been changed!`
+          )
+          setTimeout(() => {
+            setErrorBox(null)
+          }, 5000)
+        }).catch(e => {
+          setErrorBox('Changing number failed')
         })
 
       }      
     } else {
-      /* setPersons(persons.concat(personObj)) */
       personService.create(personObj)
       .then(newPerson => {
         setPersons(persons.concat(newPerson))
+        setErrorBox(
+          `Person'${personObj.name}' has been added!`
+        )
+        setTimeout(() => {
+          setErrorBox(null)
+        }, 5000)
       })
     }    
     setNewName('')
@@ -62,16 +78,26 @@ const App = () => {
   }
 
   const deletePerson = id => {
-    console.log(`Delete ${id}`)
+    const person = persons.find(p => p.id === id)
     personService.deletePerson(id).then(() => {
       const updatedList = persons.filter(p => p.id !== id)
       setPersons(updatedList)
+      setErrorBox(
+        `Person'${person.name}' has been deleted!`
+      )
+      setTimeout(() => {
+        setErrorBox(null)
+      }, 5000)
+      
+    }).catch(e => {
+      setErrorBox('Deleting person failed')
     })
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorBox} />
       <Filter filterBox={filterBox} handleFilter={handleFilter}/>
       <h3>Add new</h3>
       <PersonForm addName={addName} 
