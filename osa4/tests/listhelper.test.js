@@ -72,6 +72,21 @@ describe('most favourite blog', () => {
  
 })
 
+describe('most blogs by author', () => {
+  test('when passed all blogs returns Robert C martin', () => {
+    const result = listHelper.mostBlogs(blogs).author
+    expect(result.includes('Robert C')).toEqual
+  })
+
+})
+
+describe('Most likes total from authors blogs', () => {
+  test('when passed all blogs returns Robert C martin', () => {
+    const result = listHelper.mostLikes(blogs).author
+    expect(result.includes('Robert C')).toEqual
+  })
+})
+
 
 
 
