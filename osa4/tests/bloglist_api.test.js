@@ -15,8 +15,15 @@ beforeEach(async () => {
   
 })
 
+test('Blogs have id instead of _id', async() => {
+  const response = await api.get('/api/blogs')
+  const firstBlog = response.body[0]
+  expect(firstBlog.id).toBeDefined()
 
-test('a valid note can be added', async() => {
+}) 
+
+
+test('a valid Blog can be added', async() => {
   const newBlog = {
     title: 'Async on paras, ja await :D',
     author: 'Async Await',
@@ -31,7 +38,7 @@ test('a valid note can be added', async() => {
     const response = await api.get('/api/blogs')
 
     const titles = response.body.map(t => t.title)
-    expect(response.body.length).toBe(blogs.length+1)
+    expect(response.body.length).toBe(helper.blogs.length+1)
     expect(titles).toContain('Async on paras, ja await :D')
 
 })
@@ -47,7 +54,7 @@ test('blogs are returned as json', async () => {
 
 test('there are five notes', async () => {
   const response = await api.get('/api/blogs')
-  expect(response.body.length).toBe(blogs.length)
+  expect(response.body.length).toBe(helper.blogs.length)
 })
 
 test('the first note is React patterns is best', async () => {
