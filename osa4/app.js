@@ -4,13 +4,14 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const morgan = require('morgan')
+/* const morgan = require('morgan') */
 const mongoose = require('mongoose')
+const middlware = require('./utils/middleware')
 
- morgan.token('data', (request) => {
+/*  morgan.token('data', (request) => {
   return JSON.stringify(request.body)
 })
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data')) 
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))  */
 
 console.log('connecting to', config.MONGODB_URI)
 
@@ -21,5 +22,6 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true }).then(result => {
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/api/blogs', blogsRouter)
+app.use(middlware.errorHandler)
 
 module.exports = app
