@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Matin blogi",
-  "author": "Matti",
-  "url": "https://fullstackopen.com/",
-  "likes": 123245345
+  "title": "Testiblogi",
+  "author": "Tommitestaaja",
+  "url": "https://www.iltalehti.fi/blogi",
+  "likes": 5
 }
