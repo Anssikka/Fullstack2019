@@ -8,6 +8,7 @@ const cors = require('cors')
 const morgan = require('morgan') 
 const mongoose = require('mongoose')
 const middlware = require('./utils/middleware')
+const loginRouter = require('./controllers/login')
 
   morgan.token('data', (request) => {
   return JSON.stringify(request.body)
@@ -25,5 +26,6 @@ app.use(bodyParser.json())
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use(middlware.errorHandler)
+
 
 module.exports = app
