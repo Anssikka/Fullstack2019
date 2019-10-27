@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan') 
 const mongoose = require('mongoose')
-const middlware = require('./utils/middleware')
+const middleware = require('./utils/middleware')
 const loginRouter = require('./controllers/login')
 
   morgan.token('data', (request) => {
@@ -27,7 +27,7 @@ app.use(middleware.tokenExtractor)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
-app.use(middlware.errorHandler)
+app.use(middleware.errorHandler)
 
 
 
